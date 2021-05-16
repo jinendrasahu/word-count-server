@@ -2,10 +2,17 @@ const express = require("express");
 const app = express();
 const fetch = require('node-fetch');
 require('dotenv').config();
+const cors = require('cors');
+app.use(cors());
 const url='https://raw.githubusercontent.com/invictustech/test/main/README.md';
-app.get('/:id', (req, res) => {
 
-    fetch(url, { method: "GET" }).then(response => response.text()).
+app.get('/:id', async (req, res) => {
+    var ids=req.params.id;
+    if(!ids.match(/^[0-9]+$/)){
+        return res.json([{error:"only numeric value required"}]);
+    }
+
+    fetch(url).then(response => response.text()).
         then(data => {
             var txtdata = "" + data;
             var word = "";
@@ -31,9 +38,7 @@ app.get('/:id', (req, res) => {
             var mxTime = -1;
             var mxWord = "";
             if(n>map.size){
-                
                                 n=map.size;
-                
                             }
             while (n--) {
                 map.forEach((num, text) => {
@@ -45,12 +50,16 @@ app.get('/:id', (req, res) => {
                 });
 
                 map.set(mxWord, -1);
-                topWords.push([mxWord, mxTime])
+                item={};
+                item['word']=mxWord;
+                item['count']=mxTime;
+                topWords.push(item);
                 mxTime = -1; mxWord = "";
             }
-            res.send(JSON.stringify(topWords));
-        });
-
+            return res.status(200).json(topWords);
+            
+        })
+        .catch(err=>{return res.status(500).json([{error:"Unable to fetch api"}])});
 
 })
 
