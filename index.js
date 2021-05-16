@@ -18,8 +18,8 @@ app.get('/:id', (req, res) => {
                     word += txtdata[i];
                 }
                 else if (i > 0 && txtdata[i - 1].match(letterNum)) {
-                    if (map.get(t) === undefined) {
-                        map.set(t, 1);
+                    if (map.get(word) === undefined) {
+                        map.set(word, 1);
                     } else {
                         map.set(word, map.get(word) + 1);
                     }
@@ -30,7 +30,11 @@ app.get('/:id', (req, res) => {
             var n = parseInt(req.params.id);
             var mxTime = -1;
             var mxWord = "";
-
+            if(n>map.size){
+                
+                                n=map.size;
+                
+                            }
             while (n--) {
                 map.forEach((num, text) => {
 
