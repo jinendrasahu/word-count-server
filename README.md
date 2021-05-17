@@ -1,4 +1,6 @@
-# word-count-server (https://word-counts.herokuapp.com/5)   (5 could be any numberic parameter)
+# word-count-server (https://word-counts.herokuapp.com/5)   Frontend:(https://github.com/jinendrasahu/word-count-client)
+
+Please Visit frontend part because their is the real url of the hosted website
 
 I have created a backend server which fetch data from third party api and after munipulating that data it shows n most frequently occurred words.
 
